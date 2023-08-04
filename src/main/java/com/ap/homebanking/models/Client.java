@@ -6,7 +6,10 @@ import javax.persistence.Id;
 @Entity
 public class Client {
 
-    // Atributos de la clase clients
+    // Atributos de la clase Client
+    // @Id indicara cuál será la clave primaria de nuestra clase.
+    // @Entity indica a Spring que nos genere una tabla en la base de datos.
+    // @GeneratedValue
     @Id
     @GeneratedValue
     private Integer id;
