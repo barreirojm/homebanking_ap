@@ -15,5 +15,5 @@ es decir se crea una API REST automática que expone los recursos
 de cada repositorio anotado con @RepositoryRestResource.
  */
 @RepositoryRestResource
-public interface ClientRepository extends JpaRepository<Client, Integer> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 }

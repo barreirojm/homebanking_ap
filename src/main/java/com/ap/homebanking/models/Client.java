@@ -9,10 +9,12 @@ public class Client {
     // Atributos de la clase Client
     // @Id indicara cuál será la clave primaria de nuestra clase.
     // @Entity indica a Spring que nos genere una tabla en la base de datos.
-    // @GeneratedValue
+    // @GeneratedValueThe annotation
+    // may be applied to a primary key property or field of an entity or mapped
+    // superclass in conjunction with the Id annotation.
     @Id
     @GeneratedValue
-    private Integer id;
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -29,7 +31,7 @@ public class Client {
     }
 
     // Métodos accesores getters y setters
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
