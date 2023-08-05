@@ -15,17 +15,17 @@ public class Client {
     private Integer id;
     private String firstName;
     private String lastName;
-    private String mail;
+    private String email;
 
     // Constructor vacio por defecto sirve para SpringBoot (siempre se usa)
     public Client(){
     }
 
     // Constructor full con los parametros
-    public Client(String firstName, String lastName, String mail){
+    public Client(String firstName, String lastName, String email){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.mail = mail;
+        this.email = email;
     }
 
     // Métodos accesores getters y setters
@@ -49,11 +49,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
