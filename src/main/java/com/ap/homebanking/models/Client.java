@@ -1,7 +1,10 @@
 package com.ap.homebanking.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
 public class Client {
@@ -12,9 +15,11 @@ public class Client {
     // @GeneratedValueThe annotation
     // may be applied to a primary key property or field of an entity or mapped
     // superclass in conjunction with the Id annotation.
+    //@GeneratedValue
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -31,7 +36,7 @@ public class Client {
     }
 
     // Métodos accesores getters y setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
