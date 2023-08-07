@@ -2,20 +2,20 @@ package com.ap.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Client {
 
     // Atributos de la clase Client
     // @Id indicara cuál será la clave primaria de nuestra clase.
     // @Entity indica a Spring que nos genere una tabla en la base de datos.
-    // @GeneratedValueThe annotation
+    // @GeneratedValue The annotation
     // may be applied to a primary key property or field of an entity or mapped
     // superclass in conjunction with the Id annotation.
-    //@GeneratedValue
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -23,6 +23,15 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
+    @OneToMany(mappedBy="holder", fetch=FetchType.EAGER)
+    Set<Account> accounts = new HashSet<>();
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+    public void addAccount(Account account) {
+        account.setHolder(this);
+        accounts.add(account);
+    }
 
     // Constructor vacio por defecto sirve para SpringBoot (siempre se usa)
     public Client(){

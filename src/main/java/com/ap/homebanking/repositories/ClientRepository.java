@@ -16,4 +16,4 @@ de cada repositorio anotado con @RepositoryRestResource.
  */
 @RepositoryRestResource
 public interface ClientRepository extends JpaRepository<Client, Long> {
-}
+    }
