@@ -18,7 +18,7 @@ public class Account {
     // esto quiere decir que un cliente puede tener muchas cuentas y que una cuenta pertenece a un solo cliente.
     //the @JoinColumn annotation says which column has the ID of the client.
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="client_id")
+    @JoinColumn(name="holder_id")
     private Client holder;
     public Account(){
     }
