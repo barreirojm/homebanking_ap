@@ -20,7 +20,6 @@ import static java.util.stream.Collectors.toList;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
-    @JsonIgnore
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
 
