@@ -20,7 +20,8 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="holder_id")
     private Client holder;
-    public Account(){
+
+    public Account() {
     }
     public Account(String number, LocalDate creationDate, double balance){
         this.number = number;
@@ -60,4 +61,6 @@ public class Account {
     public void setHolder(Client holder) {
         this.holder = holder;
     }
+
+
 }
