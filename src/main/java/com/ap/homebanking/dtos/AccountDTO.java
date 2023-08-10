@@ -15,17 +15,11 @@ public class AccountDTO {
     private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO(Account account) {
-
         this.id = account.getId();
-
         this.number = account.getNumber();
-
         this.creationDate = account.getCreationDate();
-
         this.balance = account.getBalance();
-
         this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
-
     }
 
     public Set<TransactionDTO> getTransactions() {

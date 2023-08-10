@@ -24,7 +24,7 @@ public class Account {
     private Client holder;
 
     ///*************************
-    @OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
 
     private Set<Transaction> transactions = new HashSet<>();
 
@@ -33,7 +33,7 @@ public class Account {
     }
 
     public void addTransaction(Transaction transaction) {
-        transaction.setOwner(this);
+        transaction.setAccount(this);
         transactions.add(transaction);
     }
     //**************************

@@ -59,6 +59,13 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction3);
 			transactionRepository.save(transaction4);
 
+			account1.addTransaction(transaction1);
+			account2.addTransaction(transaction2);
+			account3.addTransaction(transaction3);
+			account4.addTransaction(transaction4);
+
+			
+
 
 
 
