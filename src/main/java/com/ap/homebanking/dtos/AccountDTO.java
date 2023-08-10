@@ -1,8 +1,10 @@
 package com.ap.homebanking.dtos;
 
 import com.ap.homebanking.models.Account;
-
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import static java.util.stream.Collectors.toSet;
 
 public class AccountDTO {
 
@@ -10,6 +12,7 @@ public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
+    private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO(Account account) {
 
@@ -21,6 +24,12 @@ public class AccountDTO {
 
         this.balance = account.getBalance();
 
+        this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
+
+    }
+
+    public Set<TransactionDTO> getTransactions() {
+        return transactions;
     }
 
     public Long getId() {

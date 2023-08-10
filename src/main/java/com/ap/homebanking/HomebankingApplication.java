@@ -50,8 +50,16 @@ public class HomebankingApplication {
 			accountRepository.save(account4);
 
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT,1000,"Venta_001",LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT,-5000,"Compra farmacia", LocalDateTime.now());
+			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 2500, "Venta_002", LocalDateTime.now());
+			Transaction transaction4 = new Transaction(TransactionType.DEBIT,-3000,"Compra carniceria",LocalDateTime.now());
 
 			transactionRepository.save(transaction1);
+			transactionRepository.save(transaction2);
+			transactionRepository.save(transaction3);
+			transactionRepository.save(transaction4);
+
+
 
 
 

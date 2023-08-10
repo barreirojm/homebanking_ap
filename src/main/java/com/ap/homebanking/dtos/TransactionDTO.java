@@ -1,35 +1,23 @@
-package com.ap.homebanking.models;
+package com.ap.homebanking.dtos;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.ap.homebanking.models.Transaction;
+import com.ap.homebanking.models.TransactionType;
 
-import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-@Entity
-public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+
+public class TransactionDTO {
     private Long id;
     private TransactionType type;
     private double amount;
     private String description;
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="owner_id")
-    private Account owner;
-
-
-    public Transaction(){
-
-    }
-
-    public Transaction(TransactionType type, double amount, String description, LocalDateTime date) {
-        this.type = type;
-        this.amount = amount;
-        this.description = description;
-        this.date = date;
+    public TransactionDTO (Transaction transaction){
+        this.id = transaction.getId();
+        this.type = transaction.getType();
+        this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
+        this.date = transaction.getDate();
     }
 
     public Long getId() {
@@ -67,13 +55,6 @@ public class Transaction {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-
-    public Account getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Account owner) {
-        this.owner = owner;
-    }
 }
+
 
