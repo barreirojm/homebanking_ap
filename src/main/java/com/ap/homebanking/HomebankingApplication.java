@@ -1,14 +1,11 @@
 package com.ap.homebanking;
 
 import com.ap.homebanking.models.*;
-import com.ap.homebanking.repositories.AccountRepository;
-import com.ap.homebanking.repositories.LoanRepository;
-import com.ap.homebanking.repositories.TransactionRepository;
+import com.ap.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.ap.homebanking.repositories.ClientRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,7 +20,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
 		return (args -> {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com");
 			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mail.com");
@@ -73,6 +70,23 @@ public class HomebankingApplication {
 			loanRepository.save(loan1);
 			loanRepository.save(loan2);
 			loanRepository.save(loan3);
+
+			ClientLoan clientLoan1 = new ClientLoan(400000, 60, client1, loan1);
+			ClientLoan clientLoan2 = new ClientLoan(50000, 12, client1, loan2);
+			ClientLoan clientLoan3 = new ClientLoan(100000, 24, client2, loan2);
+			ClientLoan clientLoan4 = new ClientLoan(200000, 36, client2, loan3);
+			ClientLoan clientLoan5 = new ClientLoan(250000, 60, client3, loan1);
+			ClientLoan clientLoan6 = new ClientLoan(40000, 12, client3, loan2);
+
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
+			clientLoanRepository.save(clientLoan3);
+			clientLoanRepository.save(clientLoan4);
+			clientLoanRepository.save(clientLoan5);
+			clientLoanRepository.save(clientLoan6);
+
+
+
 		});
 	}
 

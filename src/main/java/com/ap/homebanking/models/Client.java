@@ -3,7 +3,9 @@ package com.ap.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +34,19 @@ public class Client {
         account.setHolder(this);
         accounts.add(account);
     }
+    ///////////////////////////
+    @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
+    private Set<ClientLoan> loans = new HashSet<>();
+
+    public Set<ClientLoan> getLoans() {
+        return loans;
+    }
+
+    public void addClientLoan(ClientLoan clientloan) {
+        clientloan.setClient(this);
+        loans.add(clientloan);
+    }
+    //////////////////////////
 
     // Constructor vacio por defecto sirve para SpringBoot (siempre se usa)
     public Client(){
@@ -72,4 +87,14 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    /////
+    /*public List<Loan> getLoans() {
+        List<Loan> loans = new ArrayList<>();
+        for (ClientLoan clientloan : clientloans) {
+            loans.add(clientloan.getLoan());
+        }
+        return loans;
+    }*/
+
 }

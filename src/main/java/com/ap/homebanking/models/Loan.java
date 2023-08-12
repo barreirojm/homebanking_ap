@@ -1,10 +1,12 @@
 package com.ap.homebanking.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Loan {
@@ -17,6 +19,18 @@ public class Loan {
 
     @ElementCollection
     private List<Integer> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy="loan", fetch=FetchType.EAGER)
+    private Set<ClientLoan> clients = new HashSet<>();
+
+    public Set<ClientLoan> getClients() {
+        return clients;
+    }
+
+    public void addClientLoan(ClientLoan clientloan) {
+        clientloan.setLoan(this);
+        clients.add(clientloan);
+    }
 
     public Loan() {
     }
@@ -55,4 +69,16 @@ public class Loan {
     public void setPayments(List<Integer> payments) {
         this.payments = payments;
     }
+
+    ///////
+    /*@JsonIgnore
+    public List<Client> getClients() {
+        List<Client> clients = new ArrayList<>();
+        for (ClientLoan clientloan : clientloans) {
+            clients.add(clientloan.getClient());
+        }
+        return clients;
+    }*/
+
+
 }
