@@ -1,12 +1,12 @@
 package com.ap.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Loan {
@@ -21,15 +21,15 @@ public class Loan {
     private List<Integer> payments = new ArrayList<>();
 
     @OneToMany(mappedBy="loan", fetch=FetchType.EAGER)
-    private Set<ClientLoan> clients = new HashSet<>();
+    private Set<ClientLoan> clientloans = new HashSet<>();
 
-    public Set<ClientLoan> getClients() {
-        return clients;
+    public List<Client> getClients() {
+        return clientloans.stream().map(ClientLoan::getClient).collect(Collectors.toList());
     }
 
     public void addClientLoan(ClientLoan clientloan) {
         clientloan.setLoan(this);
-        clients.add(clientloan);
+        clientloans.add(clientloan);
     }
 
     public Loan() {

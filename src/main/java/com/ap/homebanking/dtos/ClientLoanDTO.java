@@ -15,11 +15,11 @@ public class ClientLoanDTO {
     * */
 
     private Long id; // id propio de ClientLoanDTO
-    private Long id_clientLoan; // id del ClientLoan
-    private Long id_loan; // id del préstamo
-    private String loanName; // Nombre del préstamo
-    private double loanAmountRequested; // Monto solicitado por el cliente
-    private int paymentsRequested; // Cuotas a pagas elegidas por el cliente
+    private Long clientLoanId; // id del ClientLoan
+    private Long loanId; // id del préstamo
+    private String name; // Nombre del préstamo
+    private double amount; // Monto solicitado por el cliente
+    private int payments; // Cuotas a pagas elegidas por el cliente
     private ClientLoan clientLoan;
     /*private Client client;
     private Loan loan;*/
@@ -28,53 +28,51 @@ public class ClientLoanDTO {
     public ClientLoanDTO() {
     }
 
-    public ClientLoanDTO(Long id_clientLoan, Long id_loan, String loanName, double loanAmountRequested, int paymentsRequested,ClientLoan clientLoan /*,Client client, Loan loan*/) {
-        this.id_clientLoan = clientLoan.getId();
-        this.id_loan = clientLoan.getLoan().getId();
-        this.loanName = clientLoan.getLoan().getName();
-        this.loanAmountRequested = clientLoan.getAmount();
-        this.paymentsRequested = clientLoan.getPayments();
+    public ClientLoanDTO(ClientLoan clientLoan) {
+        this.clientLoanId = clientLoan.getId();
+        this.loanId = (clientLoan.getLoan()).getId();
+        this.name = (clientLoan.getLoan()).getName();
+        this.amount = clientLoan.getAmount();
+        this.payments = clientLoan.getPayments();
         /*this.client = client;
         this.loan = loan;*/
     }
 
-    public ClientLoanDTO(ClientLoan clientLoan) {
-    }
+    /*public ClientLoanDTO(ClientLoan clientLoan) {
+    }*/
 
     public Long getId() {
         return id;
     }
 
-    public Long getId_clientLoan() {
-        return id_clientLoan;
+    public Long getClientLoanId() {
+        return clientLoanId;
     }
 
-    public Long getId_loan() {
-        return id_loan;
+    public Long getLoanId() {
+        return loanId;
     }
 
-    public String getLoanName() {
-        return loanName;
+    public String getName() {
+        return name;
     }
 
-    public void setLoanName(String loanName) {
-        this.loanName = loanName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getLoanAmountRequested() {
-        return loanAmountRequested;
+    public double getAmount() { return amount; }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public void setLoanAmountRequested(double loanAmountRequested) {
-        this.loanAmountRequested = loanAmountRequested;
+    public int getPayments() {
+        return payments;
     }
 
-    public int getPaymentsRequested() {
-        return paymentsRequested;
-    }
-
-    public void setPaymentsRequested(int paymentsRequested) {
-        this.paymentsRequested = paymentsRequested;
+    public void setPayments(int payments) {
+        this.payments = payments;
     }
 
     /*public Client getClient() {

@@ -36,15 +36,15 @@ public class Client {
     }
     ///////////////////////////
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
-    private Set<ClientLoan> loans = new HashSet<>();
+    private Set<ClientLoan> clientloans = new HashSet<>();
 
     public Set<ClientLoan> getLoans() {
-        return loans;
+        return clientloans;
     }
 
     public void addClientLoan(ClientLoan clientloan) {
         clientloan.setClient(this);
-        loans.add(clientloan);
+        clientloans.add(clientloan);
     }
     //////////////////////////
 
