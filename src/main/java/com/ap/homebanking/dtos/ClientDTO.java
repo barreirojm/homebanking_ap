@@ -51,6 +51,7 @@ public class ClientDTO {
         return loans;
     }
 
+
     public Set<AccountDTO> getAccounts() {
         return accounts;
     }
