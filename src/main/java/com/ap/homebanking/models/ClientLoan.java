@@ -3,8 +3,6 @@ package com.ap.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class ClientLoan {
@@ -13,13 +11,10 @@ public class ClientLoan {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private double amount;
-    /*@ElementCollection
-    private List<Integer> payments = new ArrayList<>();*/
     private int payments;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="loan_id")
     private Loan loan;
@@ -70,6 +65,5 @@ public class ClientLoan {
         this.loan = loan;
     }
 
-    /*public void setClientLoan(Client client) {
-    }*/
+
 }

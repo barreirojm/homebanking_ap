@@ -12,6 +12,10 @@ public class TransactionDTO {
     private String description;
     private LocalDateTime date;
 
+    public TransactionDTO(){
+
+    }
+
     public TransactionDTO (Transaction transaction){
         this.id = transaction.getId();
         this.type = transaction.getType();
@@ -28,33 +32,18 @@ public class TransactionDTO {
         return type;
     }
 
-    public void setType(TransactionType type) {
-        this.type = type;
-    }
-
     public double getAmount() {
         return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 }
 
 

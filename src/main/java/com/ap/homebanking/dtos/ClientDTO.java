@@ -14,9 +14,11 @@ public class ClientDTO {
     private String lastName;
     private String email;
     private Set<AccountDTO> accounts = new HashSet<>();
-
     private Set<ClientLoanDTO> loans = new HashSet<>();
 
+    public ClientDTO(){
+
+    }
 
     public ClientDTO(Client client) {
 
@@ -27,10 +29,6 @@ public class ClientDTO {
         this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(toSet());
         this.loans = client.getLoans().stream().map(ClientLoanDTO::new).collect(toSet());
 
-    }
-
-    public Set<AccountDTO> getAccounts() {
-        return accounts;
     }
 
     public Long getId() {
@@ -53,7 +51,7 @@ public class ClientDTO {
         return loans;
     }
 
-    public void setLoans(Set<ClientLoanDTO> loans) {
-        this.loans = loans;
+    public Set<AccountDTO> getAccounts() {
+        return accounts;
     }
 }

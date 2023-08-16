@@ -1,7 +1,6 @@
 package com.ap.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,27 +15,12 @@ public class Account {
     private String number;
     private LocalDate creationDate;
     private double balance;
-    // Client tiene una relación de uno a muchos con Account,
-    // esto quiere decir que un cliente puede tener muchas cuentas y que una cuenta pertenece a un solo cliente.
-    //the @JoinColumn annotation says which column has the ID of the client.
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="holder_id")
     private Client holder;
-
-    ///*************************
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
-
     private Set<Transaction> transactions = new HashSet<>();
 
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void addTransaction(Transaction transaction) {
-        transaction.setAccount(this);
-        transactions.add(transaction);
-    }
-    //**************************
     public Account() {
     }
     public Account(String number, LocalDate creationDate, double balance){
@@ -71,12 +55,22 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
     public Client getHolder() {
         return holder;
     }
+
     public void setHolder(Client holder) {
         this.holder = holder;
     }
 
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transaction.setAccount(this);
+        transactions.add(transaction);
+    }
 
 }

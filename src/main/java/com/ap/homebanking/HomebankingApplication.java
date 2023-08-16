@@ -45,11 +45,11 @@ public class HomebankingApplication {
 			accountRepository.save(account3);
 			accountRepository.save(account4);
 
-			Transaction transaction1 = new Transaction(TransactionType.CREDIT,1000,"Venta_001",LocalDateTime.now());
-			Transaction transaction2 = new Transaction(TransactionType.DEBIT,-5000,"Compra_001", LocalDateTime.now());
-			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 2500, "Venta_002", LocalDateTime.now());
-			Transaction transaction4 = new Transaction(TransactionType.DEBIT,-3000,"Compra_002",LocalDateTime.now());
-			Transaction transaction5 = new Transaction(TransactionType.DEBIT,-2000,"Compra_003",LocalDateTime.now());
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT,1000,"sale_001",LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT,-5000,"purchase_001", LocalDateTime.now());
+			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 2500, "sale_002", LocalDateTime.now());
+			Transaction transaction4 = new Transaction(TransactionType.DEBIT,-3000,"purchase_002",LocalDateTime.now());
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT,-2000,"purchase_003",LocalDateTime.now());
 
 			account1.addTransaction(transaction1);
 			account1.addTransaction(transaction5);
