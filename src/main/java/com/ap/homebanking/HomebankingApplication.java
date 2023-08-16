@@ -86,10 +86,10 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan5);
 			clientLoanRepository.save(clientLoan6);
 
-			Card card1 = new Card((client1.getFirstName()).concat(" ").concat(client1.getLastName()), CardType.DEBIT, CardColor.GOLD, 1234567890, 123, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
-			Card card2 = new Card((client1.getFirstName()).concat(" ").concat(client1.getLastName()), CardType.CREDIT, CardColor.TITANIUM, 1004567890, 003, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
-			Card card3 = new Card((client2.getFirstName()).concat(" ").concat(client2.getLastName()), CardType.CREDIT, CardColor.SILVER, 1234500000, 111, LocalDateTime.now(), LocalDateTime.now().plusYears(3));
-			Card card4 = new Card((client3.getFirstName()).concat(" ").concat(client3.getLastName()), CardType.DEBIT, CardColor.GOLD, 1211117890, 119, LocalDateTime.now(), LocalDateTime.now().plusYears(2));
+			Card card1 = new Card((client1.getFirstName()).concat(" ").concat(client1.getLastName()), CardType.DEBIT, CardColor.GOLD, "1234-5678-9000-0000", 123, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+			Card card2 = new Card((client1.getFirstName()).concat(" ").concat(client1.getLastName()), CardType.CREDIT, CardColor.TITANIUM, "1111-2222-3333-4444", 333, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+			Card card3 = new Card((client2.getFirstName()).concat(" ").concat(client2.getLastName()), CardType.CREDIT, CardColor.SILVER, "0004-9874-0000-0490", 111, LocalDateTime.now(), LocalDateTime.now().plusYears(3));
+			Card card4 = new Card((client3.getFirstName()).concat(" ").concat(client3.getLastName()), CardType.DEBIT, CardColor.GOLD, "2342-5234-5000-8795", 119, LocalDateTime.now(), LocalDateTime.now().plusYears(2));
 
 			client1.addCard(card1);
 			client1.addCard(card2);
