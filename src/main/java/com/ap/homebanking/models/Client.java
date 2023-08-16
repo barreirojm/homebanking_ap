@@ -77,7 +77,6 @@ public class Client {
         clientloan.setClient(this);
         clientloans.add(clientloan);
     }
-
     public void addCard(Card card) {
         card.setCard_holder(this);
         cards.add(card);
