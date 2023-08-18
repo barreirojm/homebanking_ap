@@ -16,6 +16,5 @@ de cada repositorio anotado con @RepositoryRestResource.
  */
 @RepositoryRestResource
 public interface ClientRepository extends JpaRepository<Client, Long> {
-
-        findByEmail
+        Client findByEmail (String email);
     }
