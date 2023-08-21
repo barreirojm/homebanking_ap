@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static org.springframework.security.config.http.MatcherType.ant;
+
 @EnableWebSecurity
 @Configuration
 public class WebAuthorization {
@@ -21,8 +23,12 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/**").hasAuthority("USER");
+                //.antMatchers("/admin/**").hasAuthority("ADMIN")
+                //.antMatchers("/**").hasAuthority("USER")
+
+                .antMatchers("/web/index.html").permitAll()
+                .antMatchers("/api/**").hasAuthority("ADMIN")
+                .antMatchers("/h2-console").hasAuthority("ADMIN");
 
         http.formLogin()
                 .usernameParameter("name")
