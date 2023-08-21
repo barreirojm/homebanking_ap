@@ -28,11 +28,12 @@ public class WebAuthorization {
 
                 .antMatchers("/web/index.html").permitAll()
                 .antMatchers("/api/**").hasAuthority("ADMIN")
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/h2-console").hasAuthority("ADMIN");
 
         http.formLogin()
-                .usernameParameter("name")
-                .passwordParameter("pwd")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .loginPage("/app/login");
 
         http.logout().logoutUrl("/app/logout");
