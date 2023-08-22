@@ -2,6 +2,7 @@ package com.ap.homebanking.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,33 +24,29 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+
+                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers("/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "api/clients/**").hasAuthority("CLIENT");
                 //.antMatchers("/admin/**").hasAuthority("ADMIN")
                 //.antMatchers("/**").hasAuthority("USER")
 
-                .antMatchers("/web/index.html").permitAll()
-                .antMatchers("/api/**").permitAll();
-                //.antMatchers("/rest/**").hasAuthority("ADMIN")
-                //.antMatchers("/h2-console").hasAuthority("ADMIN");
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .loginPage("/app/login");
+                .loginPage("/api/login");
 
-        http.logout().logoutUrl("/app/logout");
+        http.logout().logoutUrl("/api/logout");
 
         http.csrf().disable();
-
         http.headers().frameOptions().disable();
-
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
-
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
-
         return http.build();
 
     }
