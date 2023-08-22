@@ -71,6 +71,14 @@ public class Client {
         this.password = password;
     }
 
+    public RoleType getType() {
+        return type;
+    }
+
+    public void setType(RoleType type) {
+        this.type = type;
+    }
+
     public Set<Account> getAccounts() {
         return accounts;
     }

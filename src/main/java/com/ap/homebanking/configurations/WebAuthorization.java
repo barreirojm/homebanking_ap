@@ -27,9 +27,9 @@ public class WebAuthorization {
                 //.antMatchers("/**").hasAuthority("USER")
 
                 .antMatchers("/web/index.html").permitAll()
-                .antMatchers("/api/**").hasAuthority("ADMIN")
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN");
+                .antMatchers("/api/**").permitAll();
+                //.antMatchers("/rest/**").hasAuthority("ADMIN")
+                //.antMatchers("/h2-console").hasAuthority("ADMIN");
 
         http.formLogin()
                 .usernameParameter("email")
