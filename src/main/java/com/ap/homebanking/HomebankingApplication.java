@@ -29,9 +29,9 @@ public class HomebankingApplication {
 									  LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (args -> {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"), RoleType.CLIENT);
-			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mail.com", passwordEnconder.encode("juan"), RoleType.CLIENT);
-			Client client3 = new Client("Denise", "Marelli", "denu@mail.com", passwordEnconder.encode("denu"), RoleType.CLIENT);
-			Client admin = new Client("admin", "admin", "admin@admin.com", passwordEnconder.encode("admin"), RoleType.ADMIN);
+			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mindhub.com", passwordEnconder.encode("juan"), RoleType.CLIENT);
+			Client client3 = new Client("Denise", "Marelli", "denu@mindhub.com", passwordEnconder.encode("denu"), RoleType.CLIENT);
+			Client admin = new Client("admin", "admin", "admin@mindhub.com", passwordEnconder.encode("admin"), RoleType.ADMIN);
 
 			clientRepository.save(client1);
 			clientRepository.save(client2);
