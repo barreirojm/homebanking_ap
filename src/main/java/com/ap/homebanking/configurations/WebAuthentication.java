@@ -1,6 +1,7 @@
 package com.ap.homebanking.configurations;
 
 import com.ap.homebanking.models.Client;
+import com.ap.homebanking.models.RoleType;
 import com.ap.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,9 +29,17 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
             if (client != null) {
 
-                return new User(client.getEmail(), client.getPassword(),
+                if (client.getType().equals(RoleType.CLIENT)) {
 
-                        AuthorityUtils.createAuthorityList("CLIENT"));
+                    return new User(client.getEmail(), client.getPassword(),
+
+                            AuthorityUtils.createAuthorityList("CLIENT"));
+
+                } else {
+                    return new User(client.getEmail(), client.getPassword(),
+
+                            AuthorityUtils.createAuthorityList("ADMIN"));
+                }
 
             } else {
 

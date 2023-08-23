@@ -25,14 +25,11 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "api/clients/**").hasAuthority("CLIENT");
-                //.antMatchers("/admin/**").hasAuthority("ADMIN")
-                //.antMatchers("/**").hasAuthority("USER")
-
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/clients").permitAll()
+                .antMatchers("/web/index.html").permitAll()
+                .antMatchers("/rest/**", "/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/api/clients", "api/clients/**").hasAuthority("CLIENT");
+                ///api/clients/current
 
         http.formLogin()
                 .usernameParameter("email")
@@ -47,6 +44,7 @@ public class WebAuthorization {
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+
         return http.build();
 
     }
