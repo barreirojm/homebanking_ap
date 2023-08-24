@@ -45,8 +45,8 @@ public class HomebankingApplication {
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);
-			client2.addAccount(account3);
-			client3.addAccount(account4);
+			client1.addAccount(account3);
+			client1.addAccount(account4);
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);

@@ -1,6 +1,7 @@
 package com.ap.homebanking.controllers;
 
 import com.ap.homebanking.dtos.AccountDTO;
+import com.ap.homebanking.dtos.ClientDTO;
 import com.ap.homebanking.models.Account;
 import com.ap.homebanking.models.Client;
 import com.ap.homebanking.models.RoleType;
@@ -51,29 +52,30 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    public ResponseEntity<Object> createAccount (Authentication auth){
 
-    public ResponseEntity<Object> createAccount(Authentication auth) {
-        Client client = clientRepository.findByEmail(auth.getName());
+        Client client  = clientRepository.findByEmail(auth.getName());
 
         if (client == null || !client.getType().equals(RoleType.CLIENT)) {
             return new ResponseEntity<>("Only authenticated clients can create accounts.", HttpStatus.FORBIDDEN);
-        }
+            }
 
         if (client.getAccounts().size() >= 3) {
             return new ResponseEntity<>("You cannot create more than 3 accounts.", HttpStatus.FORBIDDEN);
-        }
+            }
 
         String number = "VIN-" + generateRandomAccountNumber();
 
-        Account account = new Account(number, LocalDate.now(), 0.0);
+        Account account = new Account(number, LocalDate.now(),0.0);
 
+        account.setHolder(client);
         accountRepository.save(account);
 
-        /*AccountDTO accountDTO = new AccountDTO (account.getId(), account.getNumber(), account.getBalance());*/
+        client.getAccounts().add(account);
+        clientRepository.save(client);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
     private String generateRandomAccountNumber() {
         Random rand = new Random();
