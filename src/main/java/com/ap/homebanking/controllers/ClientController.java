@@ -32,40 +32,58 @@ public class ClientController {
 
         return clientRepository.findAll().stream().map(ClientDTO::new).collect(toList());
 
-    }
+        }
 
     @RequestMapping("/clients/{id}")
     public ResponseEntity<ClientDTO> getClient(@PathVariable Long id){
         return clientRepository.findById(id).map(ClientDTO::new).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
+        }
 
    @RequestMapping("/clients/current")
     public ClientDTO getByAuth(Authentication auth){
         Client client  = clientRepository.findByEmail(auth.getName());
         ClientDTO clientDTO = new ClientDTO(client);
         return clientDTO;
-    }
+        }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
 
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (firstName.isEmpty()) {
 
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("First name is missing", HttpStatus.FORBIDDEN);
 
-        }
+            }
+
+        if (lastName.isEmpty()) {
+
+            return new ResponseEntity<>("Last name is missing", HttpStatus.FORBIDDEN);
+
+            }
+
+        if (email.isEmpty()) {
+
+            return new ResponseEntity<>("Email is missing", HttpStatus.FORBIDDEN);
+
+            }
+
+        if (password.isEmpty()) {
+
+            return new ResponseEntity<>("Password is missing", HttpStatus.FORBIDDEN);
+
+            }
 
         if (clientRepository.findByEmail(email) !=  null) {
 
             return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
 
-        }
+            }
 
         clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password), RoleType.CLIENT));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 
-    }
+        }
 
 }
