@@ -8,6 +8,7 @@ import com.ap.homebanking.models.RoleType;
 import com.ap.homebanking.repositories.AccountRepository;
 import com.ap.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -76,6 +77,7 @@ public class AccountController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     private String generateRandomAccountNumber() {
         Random rand = new Random();
