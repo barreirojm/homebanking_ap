@@ -29,7 +29,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
             if (client != null) {
 
-                if (client.getType().equals(RoleType.CLIENT)) {
+                if (client.getRole().equals(RoleType.CLIENT)) {
 
                     return new User(client.getEmail(), client.getPassword(),
 

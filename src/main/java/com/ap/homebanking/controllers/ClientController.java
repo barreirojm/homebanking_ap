@@ -47,10 +47,7 @@ public class ClientController {
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(
-
-            @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
 
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {

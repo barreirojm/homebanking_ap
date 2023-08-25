@@ -56,7 +56,7 @@ public class AccountController {
 
         Client client  = clientRepository.findByEmail(auth.getName());
 
-        if (client == null || !client.getType().equals(RoleType.CLIENT)) {
+        if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
             return new ResponseEntity<>("Only authenticated clients can create accounts.", HttpStatus.FORBIDDEN);
             }
 
