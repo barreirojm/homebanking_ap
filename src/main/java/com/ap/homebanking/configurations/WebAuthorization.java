@@ -24,29 +24,41 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+
+                // ALL
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/web/index.html").permitAll()
+                .antMatchers("/web/index.html", "/web/js/index.js", "/web/css/style.css", "/web/img/**").permitAll()
+
+                // CLIENT
                 .antMatchers("/api/clients/current").hasAuthority("CLIENT")
                 .antMatchers("/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers("/api/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers("/web/create-cards.html").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
                 .antMatchers("/web/account.html").hasAuthority("CLIENT")
                 .antMatchers("/web/cards.html").hasAuthority("CLIENT")
+                .antMatchers("/web/create-cards.html").hasAuthority("CLIENT")
+                .antMatchers("/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js").hasAuthority("CLIENT")
+
+                // ADMIN
                 .antMatchers("/api/clients").hasAuthority("ADMIN")
                 .antMatchers("/api/clients/{id}").hasAuthority("ADMIN")
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/manager.html", "manager.js").hasAuthority("ADMIN")
 
-        ;
-
+                .anyRequest().denyAll();
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
         http.csrf().disable();
         http.headers().frameOptions().disable();

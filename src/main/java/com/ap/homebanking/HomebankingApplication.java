@@ -29,7 +29,7 @@ public class HomebankingApplication {
 									  LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (args -> {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"), RoleType.CLIENT);
-			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mindhub.com", passwordEnconder.encode("juan"), RoleType.CLIENT);
+			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mindhub.com", passwordEnconder.encode("jmb"), RoleType.CLIENT);
 			Client client3 = new Client("Denise", "Marelli", "denu@mindhub.com", passwordEnconder.encode("denu"), RoleType.CLIENT);
 			Client admin = new Client("admin", "admin", "admin@mindhub.com", passwordEnconder.encode("admin"), RoleType.ADMIN);
 
@@ -38,15 +38,15 @@ public class HomebankingApplication {
 			clientRepository.save(client3);
 			clientRepository.save(admin);
 
-			Account account1 = new Account("VIN001", LocalDate.now(), 5000);
-			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
-			Account account3 = new Account("VIN003", LocalDate.of(2022, 1, 11), 250000);
-			Account account4 = new Account("VIN004", LocalDate.of(2020, 7, 20), 25000000);
+			Account account1 = new Account("VIN-001", LocalDate.now(), 5000);
+			Account account2 = new Account("VIN-002", LocalDate.now().plusDays(1), 7500);
+			Account account3 = new Account("VIN-003", LocalDate.of(2022, 1, 11), 250000);
+			Account account4 = new Account("VIN-004", LocalDate.of(2020, 7, 20), 25000000);
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);
-			client1.addAccount(account3);
-			client1.addAccount(account4);
+			client2.addAccount(account3);
+			client3.addAccount(account4);
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);
