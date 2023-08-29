@@ -16,9 +16,9 @@ public class TransactionController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Transactional
+   /* @Transactional
     @RequestMapping(path = "/transactions", method = RequestMethod.POST)
-    public ResponseBody<Object> transaction (@RequestParam)
+    public ResponseBody<Object> transaction (@RequestParam)*/
 
 
 
