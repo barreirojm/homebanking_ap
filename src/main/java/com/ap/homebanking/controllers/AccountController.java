@@ -52,19 +52,13 @@ public class AccountController {
         return accountRepository.findById(id).map(AccountDTO::new).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    /*@RequestMapping("/clients/current/accounts")
-    public ResponseEntity<List<AccountDTO>> getAccount(Authentication auth){
-        Client client = clientRepository.findByEmail(auth.getName());
+    @RequestMapping("/clients/current/accounts")
+    public List<AccountDTO> getAccount (Authentication auth){
 
-        if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        Client client  = clientRepository.findByEmail(auth.getName());
 
-        List<AccountDTO> accountDTO = client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
-
+        return client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+    }
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount (Authentication auth){

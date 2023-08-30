@@ -54,7 +54,7 @@ Vue.createApp({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             }
-            axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`, config)
+            axios.post('/api/transactions', `accountFromNumber=${this.accountFromNumber}&accountToNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`, config)
                 .then(response => {
                     this.modal.hide();
                     this.okmodal.show();

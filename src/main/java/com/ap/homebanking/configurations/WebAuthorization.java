@@ -25,7 +25,7 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                // ALL
+                /*// ALL
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
@@ -35,10 +35,12 @@ public class WebAuthorization {
                 .antMatchers("/api/clients/current").hasAuthority("CLIENT")
                 .antMatchers("/api/accounts", "/api/accounts/{id}").hasAuthority("CLIENT")
                 .antMatchers("/api/clients/current/accounts").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/transactions").hasAuthority("CLIENT")
+                .antMatchers("/api/transactions").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST,"/api/clients/current/cards").hasAuthority("CLIENT")
                 .antMatchers("/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/web/create-cards.html").hasAuthority("CLIENT")
-                .antMatchers("/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js").hasAuthority("CLIENT")
+                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/web/create-cards.html", "/web/transfers.html").hasAuthority("CLIENT")
+                .antMatchers("/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js", "/web/js/transfers.js").hasAuthority("CLIENT")
 
                 // ADMIN
                 .antMatchers("/api/clients").hasAuthority("ADMIN")
@@ -47,9 +49,9 @@ public class WebAuthorization {
                 .antMatchers("/h2-console").hasAuthority("ADMIN")
                 .antMatchers("/manager.html", "manager.js").hasAuthority("ADMIN")
 
-                .anyRequest().denyAll()
+                .anyRequest().denyAll()*/
 
-                //.antMatchers("/**").permitAll()
+                .antMatchers("/**").permitAll()
 
                 ;
 
