@@ -88,9 +88,16 @@ public class ClientController {
         }
 
         private Account createAccountForNewClient(Client client) {
+
             String number = "VIN-" + generateRandomAccountNumber();
+
+            if (accountRepository.findByNumber(number) != null){
+                number = "VIN-" + generateRandomAccountNumber();
+            }
+
             Account account = new Account(number, LocalDate.now(),0.0);
             account.setHolder(client);
+
             return account;
         }
 

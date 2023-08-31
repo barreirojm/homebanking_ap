@@ -32,6 +32,14 @@ public class CardController {
             return new ResponseEntity<>("Only authenticated clients can apply for cards.", HttpStatus.FORBIDDEN);
             }
 
+        if (type == null) {
+            return new ResponseEntity<>("Missing card type", HttpStatus.FORBIDDEN);
+        }
+
+        if (color == null) {
+            return new ResponseEntity<>("Missing card color", HttpStatus.FORBIDDEN);
+        }
+
         if (client.getCards().stream().filter(card -> card.getType() == type).count() >= 3) {
             return new ResponseEntity<>("You can only apply for 3 cards of the same type.", HttpStatus.FORBIDDEN);
             }
@@ -43,6 +51,11 @@ public class CardController {
         String cardHolder = (client.getFirstName()).concat(" ").concat(client.getLastName());
 
         String number = generateRandomCardNumber();
+
+        if (cardRepository.findByNumber(number) != null) {
+
+            number = generateRandomCardNumber();
+        }
 
         int cvv = generateRandomCVV();
 
