@@ -1,5 +1,6 @@
 package com.ap.homebanking.controllers;
 import com.ap.homebanking.dtos.LoanApplicationDTO;
+import com.ap.homebanking.dtos.LoanDTO;
 import com.ap.homebanking.models.Account;
 import com.ap.homebanking.models.Client;
 import com.ap.homebanking.models.ClientLoan;
@@ -15,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api")
 public class LoanController {
@@ -29,7 +33,11 @@ public class LoanController {
     private ClientRepository clientRepository;
 
     @GetMapping("/loans")
-    public
+    public List<LoanDTO> getLoans() {
+
+        return loanRepository.findAll().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
+    }
+
 
     @Transactional
     @PostMapping("/loans")

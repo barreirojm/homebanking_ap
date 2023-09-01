@@ -1,5 +1,7 @@
 package com.ap.homebanking.dtos;
 
+import com.ap.homebanking.models.Loan;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class LoanDTO {
     public LoanDTO() {
     }
 
-    public LoanDTO(Long id, String name, double maxAmount, List<Integer> payments) {
+    public LoanDTO(Loan loan) {
         this.id = id;
         this.name = name;
         this.maxAmount = maxAmount;
