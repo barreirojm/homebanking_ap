@@ -2,6 +2,7 @@ package com.ap.homebanking.controllers;
 import com.ap.homebanking.dtos.LoanApplicationDTO;
 import com.ap.homebanking.models.Account;
 import com.ap.homebanking.models.Client;
+import com.ap.homebanking.models.ClientLoan;
 import com.ap.homebanking.models.Loan;
 import com.ap.homebanking.repositories.AccountRepository;
 import com.ap.homebanking.repositories.ClientRepository;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +27,9 @@ public class LoanController {
     private TransactionRepository transactionRepository;
     @Autowired
     private ClientRepository clientRepository;
+
+    @GetMapping("/loans")
+    public
 
     @Transactional
     @PostMapping("/loans")
@@ -89,12 +90,16 @@ public class LoanController {
         ////////////////////////////////////////
 
         // Crear la solicitud de préstamo
-        LoanApplication loanApplication = new LoanApplication();
+        /*LoanApplicationDTO loanApplicationDTO = new LoanApplication();
         loanApplication.setLoan(loan);
         loanApplication.setAmount(loanApplicationDTO.getAmount() + (loanApplicationDTO.getAmount() * 0.20)); // Sumar el 20%
         loanApplication.setClient(client);
 
-        loanApplication = loanApplicationRepository.save(loanApplication);
+        loanApplication = loanApplicationRepository.save(loanApplication);*/
+
+        ClientLoan clientLoan = new ClientLoan(**, loanApplicationDTO.getLoanId(), loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments() )
+
+        ////////////////////////////////////////
 
         // Crear la transacción "CREDIT"
         Transaction transaction = new Transaction();
@@ -105,9 +110,13 @@ public class LoanController {
 
         transactionRepository.save(transaction);
 
+        ////////////////////////////////////////
+
         // Actualizar el saldo de la cuenta de destino
         destinationAccount.setBalance(destinationAccount.getBalance() + loanApplication.getAmount());
         accountRepository.save(destinationAccount);
+
+        ////////////////////////////////////////
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
