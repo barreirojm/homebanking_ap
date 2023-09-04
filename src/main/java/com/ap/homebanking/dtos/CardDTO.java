@@ -21,8 +21,8 @@ public class CardDTO {
     public CardDTO(Card card) {
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
-        this.type = card.getType();
-        this.color = card.getColor();
+        this.type = card.getCardType();
+        this.color = card.getCardColor();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
         this.fromDate = card.getFromDate();

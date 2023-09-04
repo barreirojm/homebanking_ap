@@ -40,11 +40,11 @@ public class CardController {
             return new ResponseEntity<>("Missing card color", HttpStatus.FORBIDDEN);
         }
 
-        if (client.getCards().stream().filter(card -> card.getType() == type).count() >= 3) {
+        if (client.getCards().stream().filter(card -> card.getCardType() == type).count() >= 3) {
             return new ResponseEntity<>("You can only apply for 3 cards of the same type.", HttpStatus.FORBIDDEN);
             }
 
-        if (client.getCards().stream().anyMatch(card -> card.getColor() == color && card.getType() == type)) {
+        if (client.getCards().stream().anyMatch(card -> card.getCardColor() == color && card.getCardType() == type)) {
             return new ResponseEntity<>("You can only have one card of each color.", HttpStatus.FORBIDDEN);
             }
 

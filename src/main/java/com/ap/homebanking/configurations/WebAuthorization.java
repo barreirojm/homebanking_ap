@@ -25,7 +25,7 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                // ALL
+                /*// ALL
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
@@ -50,9 +50,9 @@ public class WebAuthorization {
                 .antMatchers("/h2-console").hasAuthority("ADMIN")
                 .antMatchers("/manager.html", "manager.js").hasAuthority("ADMIN")
 
-                .anyRequest().denyAll()
+                .anyRequest().denyAll()*/
 
-                //.antMatchers("/**").permitAll()
+                .antMatchers("/**").permitAll()
 
                 ;
 
