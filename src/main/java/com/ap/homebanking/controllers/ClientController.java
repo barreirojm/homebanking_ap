@@ -29,26 +29,20 @@ public class ClientController {
 
     @Autowired
     private ClientService clientService;
-
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping("/clients")
-    public List<ClientDTO> getClients(){
-
-        return clientService.getClients();
-
-        }
+    public List<ClientDTO> getClients() { return clientService.getClients(); }
 
     @RequestMapping("/clients/{id}")
     public ResponseEntity<ClientDTO> getClient(@PathVariable Long id){
         return clientService.getClient(id);
         }
 
-   @RequestMapping("/clients/current")
+    @RequestMapping("/clients/current")
     public ClientDTO getByAuth(Authentication auth) {
         return clientService.getByAuth(auth);
         }
@@ -83,7 +77,6 @@ public class ClientController {
         Account account = createAccountForNewClient(client);
 
         accountService.saveAccount(account);
-        //accountRepository.save(account);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

@@ -3,6 +3,8 @@ package com.ap.homebanking.controllers;
 import com.ap.homebanking.models.*;
 import com.ap.homebanking.repositories.CardRepository;
 import com.ap.homebanking.repositories.ClientRepository;
+import com.ap.homebanking.services.CardService;
+import com.ap.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +20,14 @@ import java.util.Random;
 public class CardController {
 
     @Autowired
-    private CardRepository cardRepository;
-
+    private CardService cardService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> createCard (@RequestParam CardType type, @RequestParam CardColor color, Authentication auth) {
 
-        Client client = clientRepository.findByEmail(auth.getName());
+        Client client = clientService.getClientByAuth(auth);
 
         if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
             return new ResponseEntity<>("Only authenticated clients can apply for cards.", HttpStatus.FORBIDDEN);
@@ -52,7 +53,7 @@ public class CardController {
 
         String number = generateRandomCardNumber();
 
-        if (cardRepository.findByNumber(number) != null) {
+        if (cardService.getCardByNumber(number) != null) {
 
             number = generateRandomCardNumber();
         }
@@ -67,7 +68,7 @@ public class CardController {
 
         card.setCard_holder(client);
 
-        cardRepository.save(card);
+        cardService.saveCard(card);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

@@ -34,17 +34,9 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
     private AccountService accountService;
-
-    @Autowired
-    private ClientRepository clientRepository;
-
     @Autowired
     private ClientService clientService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -62,10 +54,6 @@ public class AccountController {
 
     @RequestMapping("/clients/current/accounts")
     public List<AccountDTO> getAccount (Authentication auth){
-
-        /*Client client  = clientRepository.findByEmail(auth.getName());
-
-        return client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());*/
         return accountService.getAccount(auth);
     }
 

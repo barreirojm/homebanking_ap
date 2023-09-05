@@ -3,6 +3,7 @@ import com.ap.homebanking.dtos.LoanApplicationDTO;
 import com.ap.homebanking.dtos.LoanDTO;
 import com.ap.homebanking.models.*;
 import com.ap.homebanking.repositories.*;
+import com.ap.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,27 +20,24 @@ import java.util.stream.Collectors;
 public class LoanController {
 
     @Autowired
-    private LoanRepository loanRepository;
+    private LoanService loanService;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private ClientLoanRepository clientLoanRepository;
+    private ClientLoanService clientLoanService;
 
     @RequestMapping("/loans")
-    public List<LoanDTO> getLoans() {
-
-        return loanRepository.findAll().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
-    }
+    public List<LoanDTO> getLoans() { return loanService.getLoans(); }
 
     @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> applyForLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication auth) {
 
-        Client client = clientRepository.findByEmail(auth.getName());
+        Client client = clientService.getClientByAuth(auth);
 
         ////////////////////////////////////////
 
@@ -61,7 +59,7 @@ public class LoanController {
 
         ////////////////////////////////////////
 
-        Loan loan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
+        Loan loan = loanService.getLoanById(loanApplicationDTO.getLoanId());
 
         if (loan == null) {
             return new ResponseEntity<>("Loan not available", HttpStatus.FORBIDDEN);
@@ -77,7 +75,7 @@ public class LoanController {
 
         ////////////////////////////////////////
 
-        Account destinationAccount = accountRepository.findByNumber(loanApplicationDTO.getToAccountNumber());
+        Account destinationAccount = accountService.getAccountByNumber(loanApplicationDTO.getToAccountNumber());
 
         if (destinationAccount == null) {
             return new ResponseEntity<>("Destination account not found", HttpStatus.FORBIDDEN);
@@ -95,7 +93,7 @@ public class LoanController {
         loan.addClientLoan(clientLoan);
         client.addClientLoan(clientLoan);
 
-        clientLoanRepository.save(clientLoan);
+        clientLoanService.saveClientLoan(clientLoan);
 
         ////////////////////////////////////////
 
@@ -104,12 +102,12 @@ public class LoanController {
 
         transaction.setAccount(destinationAccount);
 
-        transactionRepository.save(transaction);
+        transactionService.saveTransaction(transaction);
 
         ////////////////////////////////////////
 
         destinationAccount.setBalance(destinationAccount.getBalance() + clientLoan.getAmount());
-        accountRepository.save(destinationAccount);
+        accountService.saveAccount(destinationAccount);
 
         ////////////////////////////////////////
 

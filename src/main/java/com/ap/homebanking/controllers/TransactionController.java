@@ -4,6 +4,9 @@ import com.ap.homebanking.models.*;
 import com.ap.homebanking.repositories.AccountRepository;
 import com.ap.homebanking.repositories.ClientRepository;
 import com.ap.homebanking.repositories.TransactionRepository;
+import com.ap.homebanking.services.AccountService;
+import com.ap.homebanking.services.ClientService;
+import com.ap.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +21,11 @@ import java.time.LocalDateTime;
 public class TransactionController {
 
     @Autowired
-    private ClientRepository clientRepository;
-
+    private ClientService clientService;
     @Autowired
-    private AccountRepository accountRepository;
-
+    private AccountService accountService;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @Transactional
     @RequestMapping(path = "/transactions", method = RequestMethod.POST)
@@ -52,14 +53,14 @@ public class TransactionController {
             return new ResponseEntity<>("Source and destination account numbers cannot be the same.", HttpStatus.FORBIDDEN);
         }
 
-        Client client = clientRepository.findByEmail(auth.getName());
+        Client client = clientService.getClientByAuth(auth);
 
         if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
             return new ResponseEntity<>("Only authenticated clients can perform transactions.", HttpStatus.FORBIDDEN);
         }
 
-        Account fromAccount = accountRepository.findByNumber(accountFromNumber);
-        Account toAccount = accountRepository.findByNumber(accountToNumber);
+        Account fromAccount = accountService.getAccountByNumber(accountFromNumber);
+        Account toAccount = accountService.getAccountByNumber(accountToNumber);
 
         if (fromAccount == null) {
             return new ResponseEntity<>("Source account not found.", HttpStatus.FORBIDDEN);
@@ -79,29 +80,19 @@ public class TransactionController {
 
         Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, description + " - DEBIT: " + accountFromNumber, LocalDateTime.now());
         debitTransaction.setAccount(fromAccount);
-        transactionRepository.save(debitTransaction);
+        transactionService.saveTransaction(debitTransaction);
 
         Transaction creditTransaction = new Transaction(TransactionType.CREDIT, +amount, description + " - CREDIT: " + accountToNumber, LocalDateTime.now());
         creditTransaction.setAccount(toAccount);
-        transactionRepository.save(creditTransaction);
+        transactionService.saveTransaction(creditTransaction);
 
         fromAccount.setBalance(fromAccount.getBalance() - amount);
         toAccount.setBalance(toAccount.getBalance() + amount);
 
-        accountRepository.save(fromAccount);
-        accountRepository.save(toAccount);
+        accountService.saveAccount(fromAccount);
+        accountService.saveAccount(toAccount);
 
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-
-
-
-
-
-
-
-
-
 }
