@@ -25,34 +25,28 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                /*// ALL
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/web/index.html", "/web/js/index.js", "/web/css/style.css", "/web/img/**").permitAll()
+                // ALL
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/clients").permitAll()
+                .antMatchers(HttpMethod.GET,"/web/index.html", "/web/js/index.js", "/web/css/style.css", "/web/img/**").permitAll()
 
                 // CLIENT
-                .antMatchers("/api/clients/current").hasAuthority("CLIENT")
-                .antMatchers("/api/accounts", "/api/accounts/{id}").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers("/api/clients/current/accounts").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/transactions").hasAuthority("CLIENT")
-                .antMatchers("/api/transactions").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers("/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/web/create-cards.html", "/web/transfers.html").hasAuthority("CLIENT")
-                .antMatchers("/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js", "/web/js/transfers.js").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,
+                        "/api/clients/current", "/api/accounts", "/api/accounts/{id}", "/api/clients/current/accounts",
+                        "/api/transactions", "/api/clients/current/cards", "/api/loans", "/web/accounts.html", "/web/account.html",
+                        "/web/cards.html", "/web/create-cards.html", "/web/transfers.html", "/web/loan-application.html",
+                        "/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js",
+                        "/web/js/transfers.js", "/web/js/loan-application.js"
+                        ).hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts", "/api/transactions", "/api/clients/current/cards", "/api/loans").hasAuthority("CLIENT")
 
                 // ADMIN
-                .antMatchers("/api/clients").hasAuthority("ADMIN")
-                .antMatchers("/api/clients/{id}").hasAuthority("ADMIN")
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN")
-                .antMatchers("/manager.html", "manager.js").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/clients", "/api/clients/{id}", "/rest/**", "/h2-console", "/manager.html", "manager.js"
+                    ).hasAuthority("ADMIN")
 
-                .anyRequest().denyAll()*/
+                //
+                .anyRequest().denyAll()
 
-                .antMatchers("/**").permitAll()
+                //.antMatchers("/**").permitAll()
 
                 ;
 
