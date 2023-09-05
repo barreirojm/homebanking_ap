@@ -7,6 +7,8 @@ import com.ap.homebanking.models.Client;
 import com.ap.homebanking.models.RoleType;
 import com.ap.homebanking.repositories.AccountRepository;
 import com.ap.homebanking.repositories.ClientRepository;
+import com.ap.homebanking.services.AccountService;
+import com.ap.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,13 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @Autowired
+    private AccountService accountService;
+
+    @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,26 +52,27 @@ public class AccountController {
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
 
-        return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        return accountService.getAccounts();
 
     }
     @RequestMapping("/accounts/{id}")
     public ResponseEntity<AccountDTO> getAccount(@PathVariable Long id){
-        return accountRepository.findById(id).map(AccountDTO::new).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return accountService.getAccount(id);
     }
 
     @RequestMapping("/clients/current/accounts")
     public List<AccountDTO> getAccount (Authentication auth){
 
-        Client client  = clientRepository.findByEmail(auth.getName());
+        /*Client client  = clientRepository.findByEmail(auth.getName());
 
-        return client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        return client.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());*/
+        return accountService.getAccount(auth);
     }
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount (Authentication auth){
 
-        Client client  = clientRepository.findByEmail(auth.getName());
+        Client client  = clientService.getClientByAuth(auth);
 
         if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
             return new ResponseEntity<>("Only authenticated clients can create accounts.", HttpStatus.FORBIDDEN);
@@ -75,7 +84,7 @@ public class AccountController {
 
         String number = "VIN-" + generateRandomAccountNumber();
 
-        if (accountRepository.findByNumber(number) != null) {
+        if (accountService.getAccountByNumber(number) != null) {
 
             number = generateRandomAccountNumber();
         }
@@ -83,10 +92,11 @@ public class AccountController {
         Account account = new Account(number, LocalDate.now(),0.0);
 
         account.setHolder(client);
-        accountRepository.save(account);
+        accountService.saveAccount(account);
 
         client.getAccounts().add(account);
-        clientRepository.save(client);
+
+        clientService.saveClient(client);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
