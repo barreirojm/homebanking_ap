@@ -28,7 +28,7 @@ public class HomebankingApplication {
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository,
 									  LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (args -> {
-			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"), RoleType.CLIENT);
+			/*Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEnconder.encode("melba"), RoleType.CLIENT);
 			Client client2 = new Client("Juan Manuel", "Barreiro","jmb@mindhub.com", passwordEnconder.encode("jmb"), RoleType.CLIENT);
 			Client client3 = new Client("Denise", "Marelli", "denu@mindhub.com", passwordEnconder.encode("denu"), RoleType.CLIENT);
 			Client admin = new Client("admin", "admin", "admin@mindhub.com", passwordEnconder.encode("admin"), RoleType.ADMIN);
@@ -121,7 +121,7 @@ public class HomebankingApplication {
 			cardRepository.save(card2);
 			cardRepository.save(card3);
 			cardRepository.save(card4);
-
+*/
 		});
 	}
 
