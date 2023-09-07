@@ -37,7 +37,10 @@ public class WebAuthorization {
                         "/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js",
                         "/web/js/transfers.js", "/web/js/loan-application.js"
                         ).hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts", "/api/transactions", "/api/clients/current/cards", "/api/loans").hasAuthority("CLIENT")
+
+                .antMatchers(HttpMethod.POST,"/api/clients/current/accounts", "/api/transactions",
+                        "/api/clients/current/cards", "/api/loans"
+                        ).hasAuthority("CLIENT")
 
                 // ADMIN
                 .antMatchers(HttpMethod.GET,"/api/clients", "/api/clients/{id}", "/rest/**", "/h2-console", "/manager.html", "manager.js"
