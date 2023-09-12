@@ -28,7 +28,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @Transactional
-    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
+    @PostMapping(path = "/transactions")
     public ResponseEntity<Object> transaction
             (@RequestParam String accountFromNumber, @RequestParam String accountToNumber, @RequestParam double amount, @RequestParam String description,
              Authentication auth) {

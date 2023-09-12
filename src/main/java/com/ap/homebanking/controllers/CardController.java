@@ -24,7 +24,7 @@ public class CardController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping(path = "/clients/current/cards")
     public ResponseEntity<Object> createCard (@RequestParam CardType type, @RequestParam CardColor color, Authentication auth) {
 
         Client client = clientService.getClientByAuth(auth);

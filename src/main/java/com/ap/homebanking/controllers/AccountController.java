@@ -15,10 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,23 +38,22 @@ public class AccountController {
     private PasswordEncoder passwordEncoder;
 
 
-    @RequestMapping("/accounts")
+    @GetMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-
         return accountService.getAccounts();
-
     }
-    @RequestMapping("/accounts/{id}")
+
+    @GetMapping("/accounts/{id}")
     public ResponseEntity<AccountDTO> getAccount(@PathVariable Long id){
         return accountService.getAccount(id);
     }
 
-    @RequestMapping("/clients/current/accounts")
+    @GetMapping("/clients/current/accounts")
     public List<AccountDTO> getAccount (Authentication auth){
         return accountService.getAccount(auth);
     }
 
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping(path = "/clients/current/accounts")
     public ResponseEntity<Object> createAccount (Authentication auth){
 
         Client client  = clientService.getClientByAuth(auth);
@@ -88,7 +84,6 @@ public class AccountController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 
     private String generateRandomAccountNumber() {
         Random rand = new Random();
