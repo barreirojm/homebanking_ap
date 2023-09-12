@@ -5,6 +5,7 @@ import com.ap.homebanking.repositories.CardRepository;
 import com.ap.homebanking.repositories.ClientRepository;
 import com.ap.homebanking.services.CardService;
 import com.ap.homebanking.services.ClientService;
+import com.ap.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,14 +52,14 @@ public class CardController {
 
         String cardHolder = (client.getFirstName()).concat(" ").concat(client.getLastName());
 
-        String number = generateRandomCardNumber();
+        String number = CardUtils.getCardNumber();
 
         if (cardService.getCardByNumber(number) != null) {
 
-            number = generateRandomCardNumber();
+            number = CardUtils.getCardNumber();
         }
 
-        int cvv = generateRandomCVV();
+        int cvv = CardUtils.getCVV();
 
         LocalDateTime fromDate = LocalDateTime.now();
 
@@ -74,7 +75,7 @@ public class CardController {
 
         }
 
-        private String generateRandomCardNumber() {
+        /*private String generateRandomCardNumber() {
             Random rand = new Random();
             return String.format("%04d-%04d-%04d-%04d",
                     rand.nextInt(10000), rand.nextInt(10000),
@@ -84,7 +85,7 @@ public class CardController {
         private int generateRandomCVV() {
             Random rand = new Random();
             return rand.nextInt(1000);
-        }
+        }*/
 
 
 }
