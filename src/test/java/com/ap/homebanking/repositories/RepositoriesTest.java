@@ -1,5 +1,4 @@
-package com.ap.homebanking;
-
+package com.ap.homebanking.repositories;
 
 import com.ap.homebanking.models.*;
 import com.ap.homebanking.repositories.*;
@@ -93,3 +92,4 @@ public class RepositoriesTest {
 
 
 }
+
