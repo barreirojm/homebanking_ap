@@ -51,17 +51,36 @@ public class CardController {
             }*/
         if (client.getCards().stream()
                 .filter(card -> card.getCardType() == type)
-                .filter(card -> card.isActive()) // Solo considera tarjetas activas
+                .filter(card -> card.isActive())
                 .count() >= 3) {
             return new ResponseEntity<>("You can only apply for 3 active cards of the same type.", HttpStatus.FORBIDDEN);
         }
 
         if (client.getCards().stream()
                 .filter(card -> card.getCardColor() == color && card.getCardType() == type)
-                .filter(card -> card.isActive()) // Solo considera tarjetas activas
+                .filter(card -> card.isActive())
                 .findAny()
                 .isPresent()) {
             return new ResponseEntity<>("You can only have one active card of each color.", HttpStatus.FORBIDDEN);
+        }
+
+        // Verifica el límite total de tarjetas (activas e inactivas)
+        int maxTotalCards = 12;
+        long totalCardCount = client.getCards().stream().count();
+
+        if (totalCardCount >= maxTotalCards) {
+            return new ResponseEntity<>("You have reached the maximum limit for total cards.", HttpStatus.FORBIDDEN);
+        }
+
+        // Verifica el límite de tarjetas inactivas (máximo 6)
+        long inactiveCardCount = client.getCards().stream()
+                .filter(card -> !card.isActive())
+                .count();
+
+        int maxInactiveCards = 6;
+
+        if (inactiveCardCount >= maxInactiveCards) {
+            return new ResponseEntity<>("You have reached the maximum limit for inactive cards.", HttpStatus.FORBIDDEN);
         }
 
         String cardHolder = (client.getFirstName()).concat(" ").concat(client.getLastName());

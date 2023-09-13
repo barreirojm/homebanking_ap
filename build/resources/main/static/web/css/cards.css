@@ -30,6 +30,13 @@
 	-moz-backface-visibility: hidden;
 }
 
+.expired-card {
+    border: 8px solid red;
+    border-radius: 8px;
+    box-shadow: 0 0 5px red; /* Agrega una sombra roja */
+    background-color: #ffe6e6;
+}
+
 .gold-plastic-card {
 	background: linear-gradient(45deg, #ecad36, #bea328);
 }

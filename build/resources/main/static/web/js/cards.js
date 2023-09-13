@@ -37,9 +37,7 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
-
         //////////////////////
-
         deleteSelectedCard: function () {
             if (this.selectedCard) {
                 const cardId = this.selectedCard.id; // Obtén el ID de la tarjeta seleccionada
@@ -58,10 +56,16 @@ Vue.createApp({
                         console.error(error);
                     });
             }
-        }
-
+        },
         //////////////////////
+        isCardExpired(card) {
+                const currentDate = new Date();
+                const expirationDate = new Date(card.thruDate);
 
+                // Compara las fechas para determinar si la tarjeta está vencida
+                return currentDate > expirationDate;
+            }
+        //////////////////////
 
     },
     mounted: function () {

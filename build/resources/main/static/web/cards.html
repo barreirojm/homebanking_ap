@@ -110,14 +110,15 @@
                     <div class="row mt-3">
                         <div class="col">
                             <h2 class="display-6 subtitle">Debit Cards</h2>
-                            <a v-if="clientInfo.cards != null && clientInfo.cards.length < 6" href="create-cards.html"
+                            <a v-if="clientInfo.cards != null && onlyActiveCards.length < 6" href="create-cards.html"
                                 id="create" class="btn btn-sm btn-success">Create</a>
 
                             <div v-if="debitCards.length <= 0"><span class="small">No debit cards</span></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="card in debitCards"  class="plastic-card col-12 col-md-3 mt-2">
+                        <div v-for="card in debitCards"  class="plastic-card col-12 col-md-3 mt-2"
+                             >
                             <div
                                 v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
@@ -129,9 +130,9 @@
                                     <span class="plastic-card__label">card holder</span>
                                     <p class="plastic-card__info">{{ card.cardHolder }}</p>
                                 </div>
-                                <div class="plastic-card__space-25">
-                                    <span class="plastic-card__label">Expires</span>
-                                    <p class="plastic-card__info">{{ formatDate(card.thruDate) }}</p>
+                                <div class="plastic-card__space-25" >
+                                    <span class="plastic-card__label" :style="{ color: isCardExpired(card) ? 'red' : 'black' }">Expires</span>
+                                    <p class="plastic-card__info" :style="{ color: isCardExpired(card) ? 'red' : 'black' }">{{ formatDate(card.thruDate) }}</p>
                                 </div>
                             </div>
 
@@ -157,7 +158,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="card in creditCards" class="plastic-card col-12 col-md-3 mt-2" >
+                        <div v-for="card in creditCards" class="plastic-card col-12 col-md-3 mt-2"
+                             :class="{'expired-card': isCardExpired(card)}">
                             <div
                                 v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
