@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class AccountServiceImplement implements AccountService {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
     @Override
     public Account getAccountByNumber(String number) {

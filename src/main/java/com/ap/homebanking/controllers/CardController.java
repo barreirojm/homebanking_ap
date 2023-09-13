@@ -65,7 +65,9 @@ public class CardController {
 
         LocalDateTime thruDate = LocalDateTime.now().plusYears(5);
 
-        Card card = new Card(cardHolder, type, color, number, cvv, fromDate, thruDate);
+        boolean isActive = true;
+
+        Card card = new Card(cardHolder, type, color, number, cvv, fromDate, thruDate, isActive);
 
         card.setCard_holder(client);
 
@@ -75,17 +77,17 @@ public class CardController {
 
         }
 
-        /*private String generateRandomCardNumber() {
-            Random rand = new Random();
-            return String.format("%04d-%04d-%04d-%04d",
-                    rand.nextInt(10000), rand.nextInt(10000),
-                    rand.nextInt(10000), rand.nextInt(10000));
+    @PatchMapping(path = "/clients/current/cards/{id}")
+    public ResponseEntity<String> deleteCard(@PathVariable Long id) {
+        try {
+            cardService.deleteCard(id);
+            return ResponseEntity.ok("Card deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
         }
 
-        private int generateRandomCVV() {
-            Random rand = new Random();
-            return rand.nextInt(1000);
-        }*/
+    }
+
 
 
 }

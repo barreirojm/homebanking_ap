@@ -7,6 +7,8 @@ import com.ap.homebanking.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CardServiceImplement implements CardService {
 
@@ -22,4 +24,17 @@ public class CardServiceImplement implements CardService {
     public void saveCard(Card card) {
         cardRepository.save(card);
     }
+
+    @Override
+    public void deleteCard(Long id) {
+        Optional<Card> cardOptional = cardRepository.findById(id);
+        if (cardOptional.isPresent()) {
+            Card card = cardOptional.get();
+            card.setActive(false);
+            cardRepository.save(card);
+        }
+    }
+
+
+
 }
