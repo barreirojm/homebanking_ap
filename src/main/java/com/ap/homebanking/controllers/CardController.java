@@ -42,13 +42,27 @@ public class CardController {
             return new ResponseEntity<>("Missing card color", HttpStatus.FORBIDDEN);
         }
 
-        if (client.getCards().stream().filter(card -> card.getCardType() == type).count() >= 3) {
+        /*if (client.getCards().stream().filter(card -> card.getCardType() == type).count() >= 3) {
             return new ResponseEntity<>("You can only apply for 3 cards of the same type.", HttpStatus.FORBIDDEN);
             }
 
         if (client.getCards().stream().anyMatch(card -> card.getCardColor() == color && card.getCardType() == type)) {
             return new ResponseEntity<>("You can only have one card of each color.", HttpStatus.FORBIDDEN);
-            }
+            }*/
+        if (client.getCards().stream()
+                .filter(card -> card.getCardType() == type)
+                .filter(card -> card.isActive()) // Solo considera tarjetas activas
+                .count() >= 3) {
+            return new ResponseEntity<>("You can only apply for 3 active cards of the same type.", HttpStatus.FORBIDDEN);
+        }
+
+        if (client.getCards().stream()
+                .filter(card -> card.getCardColor() == color && card.getCardType() == type)
+                .filter(card -> card.isActive()) // Solo considera tarjetas activas
+                .findAny()
+                .isPresent()) {
+            return new ResponseEntity<>("You can only have one active card of each color.", HttpStatus.FORBIDDEN);
+        }
 
         String cardHolder = (client.getFirstName()).concat(" ").concat(client.getLastName());
 
@@ -77,8 +91,11 @@ public class CardController {
 
         }
 
-    @PatchMapping(path = "/clients/current/cards/{id}")
-    public ResponseEntity<String> deleteCard(@PathVariable Long id) {
+    @PatchMapping(path = "/clients/current/cards")
+    public ResponseEntity<String> deleteCard (@RequestParam Long id, Authentication auth) {
+
+        Client client = clientService.getClientByAuth(auth);
+
         try {
             cardService.deleteCard(id);
             return ResponseEntity.ok("Card deleted.");

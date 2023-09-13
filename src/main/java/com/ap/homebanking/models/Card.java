@@ -18,7 +18,7 @@ public class Card {
     private int cvv;
     private LocalDateTime fromDate;
     private LocalDateTime thruDate;
-    private boolean isActive = true;
+    private boolean isActive;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="card_holder_id")

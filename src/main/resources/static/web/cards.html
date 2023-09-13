@@ -70,6 +70,33 @@
                         </ul>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Delete Cards
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Delete Cards</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label class="form-label">Select card</label>
+                                            <select v-model="selectedCard" class="form-select" aria-label="Select a card" required>
+                                                <option v-for="card in onlyActiveCards"  :value="card">{{ card.type }} | {{ card.color }} | {{ card.number }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-danger" @click="deleteSelectedCard">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
                             <button class="btn btn-danger img-fluid" v-on:click="signOut">Sign out</button>
                         </ul>
                     </div>
@@ -83,13 +110,14 @@
                     <div class="row mt-3">
                         <div class="col">
                             <h2 class="display-6 subtitle">Debit Cards</h2>
-                            <a v-if="clientInfo.cards != null && clientInfo.cards.length < 6" href="create-cards.html"
+                            <a v-if="clientInfo.cards != null && onlyActiveCards.length < 6" href="create-cards.html"
                                 id="create" class="btn btn-sm btn-success">Create</a>
+
                             <div v-if="debitCards.length <= 0"><span class="small">No debit cards</span></div>
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="card in debitCards" class="plastic-card col-12 col-md-3 mt-2">
+                        <div v-for="card in debitCards"  class="plastic-card col-12 col-md-3 mt-2">
                             <div
                                 v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
@@ -129,7 +157,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-for="card in creditCards" class="plastic-card col-12 col-md-3 mt-2">
+                        <div v-for="card in creditCards" class="plastic-card col-12 col-md-3 mt-2" >
                             <div
                                 v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
@@ -162,9 +190,15 @@
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
+
+
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

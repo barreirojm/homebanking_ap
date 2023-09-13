@@ -4,6 +4,7 @@ Vue.createApp({
             clientInfo: {},
             creditCards: [],
             debitCards: [],
+            onlyActiveCards: [],
             errorToats: null,
             errorMsg: null,
         }
@@ -14,8 +15,11 @@ Vue.createApp({
                 .then((response) => {
                     //get client ifo
                     this.clientInfo = response.data;
-                    this.creditCards = this.clientInfo.cards.filter(card => card.type == "CREDIT");
-                    this.debitCards = this.clientInfo.cards.filter(card => card.type == "DEBIT");
+                    this.creditCards = this.clientInfo.cards.filter(card => card.type == "CREDIT" && card.active == true);
+                    this.debitCards = this.clientInfo.cards.filter(card => card.type == "DEBIT" && card.active == true);
+                    this.onlyActiveCards = this.clientInfo.cards.filter(card => card.active == true);
+                    console.log('Todas las tarjetas:', this.clientInfo.cards);
+                    console.log(this.creditCards)
                 })
                 .catch((error) => {
                     this.errorMsg = "Error getting data";
@@ -33,6 +37,31 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
+
+        //////////////////////
+
+        deleteSelectedCard: function () {
+            if (this.selectedCard) {
+                const cardId = this.selectedCard.id; // Obtén el ID de la tarjeta seleccionada
+                console.log('Id de la tarjeta seleccionada:', cardId);
+                axios.patch(`/api/clients/current/cards?id=${cardId}`)
+                    .then(response => {
+                        // Maneja la respuesta si es necesario
+                        console.log(response.data); // Puedes imprimir la respuesta en la consola
+                        // Cierra el modal (si es necesario)
+                        //$('#staticBackdrop').modal('hide');
+                        this.clientInfo.cards = this.clientInfo.cards.filter(card => card.id !== cardId);
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        // Maneja el error si es necesario
+                        console.error(error);
+                    });
+            }
+        }
+
+        //////////////////////
+
 
     },
     mounted: function () {

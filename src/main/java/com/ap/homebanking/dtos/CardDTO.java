@@ -14,6 +14,7 @@ public class CardDTO {
     private int cvv;
     private LocalDateTime fromDate;
     private LocalDateTime thruDate;
+    private boolean isActive;
 
     public CardDTO() {
     }
@@ -27,6 +28,7 @@ public class CardDTO {
         this.cvv = card.getCvv();
         this.fromDate = card.getFromDate();
         this.thruDate = card.getThruDate();
+        this.isActive = card.isActive();
     }
 
     public Long getId() {
@@ -59,5 +61,9 @@ public class CardDTO {
 
     public LocalDateTime getThruDate() {
         return thruDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }
