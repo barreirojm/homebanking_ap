@@ -40,13 +40,13 @@ Vue.createApp({
         //////////////////////
         deleteSelectedCard: function () {
             if (this.selectedCard) {
-                const cardId = this.selectedCard.id; // Obtén el ID de la tarjeta seleccionada
+                const cardId = this.selectedCard.id;
                 console.log('Id de la tarjeta seleccionada:', cardId);
                 axios.patch(`/api/clients/current/cards?id=${cardId}`)
                     .then(response => {
-                        // Maneja la respuesta si es necesario
-                        console.log(response.data); // Puedes imprimir la respuesta en la consola
-                        // Cierra el modal (si es necesario)
+
+                        console.log(response.data);
+
                         //$('#staticBackdrop').modal('hide');
                         this.clientInfo.cards = this.clientInfo.cards.filter(card => card.id !== cardId);
                         window.location.reload();

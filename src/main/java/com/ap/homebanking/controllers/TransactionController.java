@@ -78,11 +78,15 @@ public class TransactionController {
             return new ResponseEntity<>("Insufficient balance in the source account.", HttpStatus.BAD_REQUEST);
         }
 
-        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, description + " - DEBIT: " + accountFromNumber, LocalDateTime.now());
+        double currentBalanceFromAccount = fromAccount.getBalance() - amount;
+
+        Transaction debitTransaction = new Transaction(TransactionType.DEBIT, -amount, description + " - DEBIT: " + accountFromNumber, LocalDateTime.now(), currentBalanceFromAccount);
 
         transactionService.saveTransaction(debitTransaction);
 
-        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, +amount, description + " - CREDIT: " + accountToNumber, LocalDateTime.now());
+        double currentBalanceToAccount = toAccount.getBalance() + amount;
+
+        Transaction creditTransaction = new Transaction(TransactionType.CREDIT, +amount, description + " - CREDIT: " + accountToNumber, LocalDateTime.now(), currentBalanceToAccount);
 
         transactionService.saveTransaction(creditTransaction);
 
