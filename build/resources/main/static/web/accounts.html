@@ -69,6 +69,47 @@
                         </ul>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalToggleLabel">WARNING!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Please carefully read the account number to be deleted; this action cannot be undone.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Continue to delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalToggleLabel2">Select an account</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label class="form-label"></label>
+                                            <select v-model="selectedAccount" class="form-select" aria-label="Select an account" required>
+
+                                                <option v-for="account in onlyActiveAccounts"  :value="account">{{ account.number }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" @click="deleteSelectedAccount">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-danger" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Delete Accounts</a>
+                        </ul>
+                        <hr>
+                        <ul class="nav nav-pills flex-column mb-auto">
                             <button class="btn btn-danger img-fluid" v-on:click="signOut">Sign out</button>
                         </ul>
                     </div>
@@ -87,7 +128,7 @@
                         </div>
                     </div>
                     <div class="row mx-2">
-                        <div v-for="account in clientInfo.accounts" class="col-12 col-md-4 mt-2 ">
+                        <div v-for="account in onlyActiveAccounts" class="col-12 col-md-4 mt-2 ">
                             <a class="account-link" v-bind:href="'/web/account.html?id='+account.id">
                                 <div class="card border-0 account">
                                     <div class="card-body">

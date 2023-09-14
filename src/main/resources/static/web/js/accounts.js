@@ -2,6 +2,7 @@ Vue.createApp({
     data() {
         return {
             clientInfo: {},
+            onlyActiveAccounts: [],
             errorToats: null,
             errorMsg: null,
         }
@@ -12,6 +13,8 @@ Vue.createApp({
                 .then((response) => {
                     //get client ifo
                     this.clientInfo = response.data;
+                    this.onlyActiveAccounts = this.clientInfo.accounts.filter(account => account.active == true);
+                    console.log(this.onlyActiveAccounts);
                 })
                 .catch((error) => {
                     // handle error
@@ -37,10 +40,30 @@ Vue.createApp({
                     this.errorMsg = error.response.data;
                     this.errorToats.show();
                 })
+        },
+        /////////////////
+        deleteSelectedAccount: function () {
+           if (this.selectedAccount) {
+                 const accountId = this.selectedAccount.id;
+                 console.log('Id de la cuenta seleccionada:', accountId);
+                 axios.patch(`/api/clients/current/accounts?id=${accountId}`)
+                   .then(response => {
+                   console.log(response.data);
+                   this.clientInfo.accounts = this.clientInfo.accounts.filter(account => account.id !== accountId);
+                   window.location.reload();
+                   })
+                   .catch(error => {
+                     console.error(error);
+                   });
+            }
+
         }
     },
+
+
     mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();
     }
+
 }).mount('#app')

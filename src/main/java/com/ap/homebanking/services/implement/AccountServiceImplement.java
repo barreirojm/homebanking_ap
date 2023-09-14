@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +55,16 @@ public class AccountServiceImplement implements AccountService {
     @Override
     public ResponseEntity<Object> createAccount(Authentication auth) {
         return null;
+    }
+
+    @Override
+    public void deleteAccount(Long id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.setActive(false);
+            accountRepository.save(account);
+        }
     }
 
 

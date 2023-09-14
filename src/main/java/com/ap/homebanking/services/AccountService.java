@@ -22,5 +22,7 @@ public interface AccountService {
 
     ResponseEntity<Object> createAccount (Authentication auth);
 
+    void deleteAccount (Long id);
+
 
 }

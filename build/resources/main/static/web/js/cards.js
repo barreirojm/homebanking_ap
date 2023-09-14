@@ -44,9 +44,7 @@ Vue.createApp({
                 console.log('Id de la tarjeta seleccionada:', cardId);
                 axios.patch(`/api/clients/current/cards?id=${cardId}`)
                     .then(response => {
-
                         console.log(response.data);
-
                         //$('#staticBackdrop').modal('hide');
                         this.clientInfo.cards = this.clientInfo.cards.filter(card => card.id !== cardId);
                         window.location.reload();

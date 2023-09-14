@@ -90,7 +90,7 @@ public class ClientController {
                 number = "VIN-" + generateRandomAccountNumber();
             }
 
-            Account account = new Account(number, LocalDate.now(),0.0);
+            Account account = new Account(number, LocalDate.now(),0.0, true);
             account.setHolder(client);
 
             return account;

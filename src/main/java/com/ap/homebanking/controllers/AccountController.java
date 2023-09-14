@@ -73,7 +73,7 @@ public class AccountController {
             number = generateRandomAccountNumber();
         }
 
-        Account account = new Account(number, LocalDate.now(),0.0);
+        Account account = new Account(number, LocalDate.now(),0.0, true);
 
         account.setHolder(client);
         accountService.saveAccount(account);
@@ -89,6 +89,22 @@ public class AccountController {
         Random rand = new Random();
         int randomNumber = rand.nextInt(900000) + 100000;
         return String.valueOf(randomNumber);
+    }
+
+    ////////////////////////////////////////
+
+    @PatchMapping(path = "/clients/current/accounts")
+    public ResponseEntity<String> deleteAccount (@RequestParam Long id, Authentication auth) {
+
+        Client client = clientService.getClientByAuth(auth);
+
+        try {
+            accountService.deleteAccount(id);
+            return ResponseEntity.ok("Account deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
+        }
+
     }
 }
 
