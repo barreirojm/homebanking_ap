@@ -25,7 +25,7 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                /*// ALL
+                // ALL
                 .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/clients").permitAll()
                 .antMatchers(HttpMethod.GET,"/web/index.html", "/web/js/index.js", "/web/css/style.css", "/web/img/**").permitAll()
 
@@ -38,6 +38,8 @@ public class WebAuthorization {
                         "/web/js/transfers.js", "/web/js/loan-application.js"
                         ).hasAuthority("CLIENT")
 
+                .antMatchers(HttpMethod.PATCH, "/api/clients/current/cards", "/api/clients/current/accounts").hasAuthority("CLIENT")
+
                 .antMatchers(HttpMethod.POST,"/api/clients/current/accounts", "/api/transactions",
                         "/api/clients/current/cards", "/api/loans"
                         ).hasAuthority("CLIENT")
@@ -47,9 +49,9 @@ public class WebAuthorization {
                     ).hasAuthority("ADMIN")
 
                 //
-                .anyRequest().denyAll()*/
+                .anyRequest().denyAll()
 
-                .antMatchers("/**").permitAll()
+                //.antMatchers("/**").permitAll()
 
                 ;
 
