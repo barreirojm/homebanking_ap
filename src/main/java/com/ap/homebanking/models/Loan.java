@@ -16,6 +16,7 @@ public class Loan {
     private Long id;
     private String name;
     private double maxAmount;
+    private double interestRate;
     @ElementCollection
     private List<Integer> payments = new ArrayList<>();
     @OneToMany(mappedBy="loan", fetch=FetchType.EAGER)
@@ -24,10 +25,11 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String name, double maxAmount, List<Integer> payments) {
+    public Loan(String name, double maxAmount, List<Integer> payments, double interestRate) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interestRate = interestRate;
     }
 
     public Long getId() {
@@ -56,6 +58,14 @@ public class Loan {
 
     public void setPayments(List<Integer> payments) {
         this.payments = payments;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
     }
 
     public List<Client> getClients() {

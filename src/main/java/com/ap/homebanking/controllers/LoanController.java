@@ -75,6 +75,13 @@ public class LoanController {
 
         ////////////////////////////////////////
 
+        /*double interestRate = loan.getInterestRate();
+        double loanAmount = loanApplicationDTO.getAmount();
+
+        double finalLoanAmount = loanAmount + (loanAmount * interestRate / 100);*/
+
+        ////////////////////////////////////////
+
         Account destinationAccount = accountService.getAccountByNumber(loanApplicationDTO.getToAccountNumber());
 
         if (destinationAccount == null) {
@@ -96,6 +103,7 @@ public class LoanController {
         clientLoanService.saveClientLoan(clientLoan);
 
         ////////////////////////////////////////
+
         double currentBalanceDestinationAccount = clientLoan.getAmount() + destinationAccount.getBalance();
 
         Transaction transaction = new Transaction(TransactionType.CREDIT, clientLoan.getAmount(),

@@ -27,9 +27,8 @@ public class CardServiceImplement implements CardService {
 
     @Override
     public void deleteCard(Long id) {
-        Optional<Card> cardOptional = cardRepository.findById(id);
-        if (cardOptional.isPresent()) {
-            Card card = cardOptional.get();
+        Card card = cardRepository.findById(id).orElse(null);
+        if (card != null) {
             card.setActive(false);
             cardRepository.save(card);
         }

@@ -10,7 +10,8 @@ Vue.createApp({
             errorMsg: null,
             accountToNumber: "VIN",
             amount: 0,
-            fees: []
+            fees: [],
+            interestRate: 0,
         }
     },
     methods: {
@@ -22,6 +23,8 @@ Vue.createApp({
                     this.clientAccounts = response[1].data;
                     console.log(this.loanTypes);
                     console.log(this.clientAccounts);
+                    console.log(this.interestRate);
+                    console.log(this.amount);
                 })
                 .catch((error) => {
                     this.errorMsg = "Error getting data";
@@ -61,16 +64,26 @@ Vue.createApp({
                     this.errorMsg = error.response.data;
                     this.errorToats.show();
                 })
+                console.log(this.loanTypes.interestRate);
         },
         changedType: function () {
-            this.paymentsList = this.loanTypes.find(loanType => loanType.id == this.loanTypeId).payments;
+            //this.paymentsList = this.loanTypes.find(loanType => loanType.id == this.loanTypeId).payments;
+            const selectedLoanType = this.loanTypes.find(loanType => loanType.id == this.loanTypeId);
+            if (selectedLoanType) {
+                    this.interestRate = selectedLoanType.interestRate;
+                    this.paymentsList = selectedLoanType.payments;
+                }
         },
         finish: function () {
             window.location.reload();
         },
         checkFees: function () {
             this.fees = [];
-            this.totalLoan = parseInt(this.amount) + (this.amount * 0.2);
+            this.interestRate = this.loanTypes.interestRate;
+            this.totalLoan = parseInt(this.amount) + (this.amount * (this.interestRate / 100));
+
+            console.log(this.amount);
+            console.log(this.interestRate);
             let amount = this.totalLoan / this.payments;
             for (let i = 1; i <= this.payments; i++) {
                 this.fees.push({ amount: amount });
