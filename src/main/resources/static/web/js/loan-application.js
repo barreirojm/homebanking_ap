@@ -85,9 +85,9 @@ Vue.createApp({
 
             console.log(this.amount);
             console.log(this.interestRate);
-            let amount = this.totalLoan / this.payments;
+            let amount = (this.totalLoan / this.payments).toFixed(2);
             for (let i = 1; i <= this.payments; i++) {
-                this.fees.push({ amount: amount });
+                this.fees.push({ amount: parseFloat(amount) });
             }
             this.feesmodal.show();
         },

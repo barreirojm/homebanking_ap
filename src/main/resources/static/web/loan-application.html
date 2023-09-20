@@ -80,7 +80,7 @@
                                             class="form-select" aria-label="Default select example" required>
                                             <option value="0">Open this select menu</option>
                                             <option v-for="loanType in loanTypes" v-bind:value="loanType.id">{{
-                                                loanType.name }} | max amount: {{ loanType.maxAmount }}</option>
+                                                loanType.name }} | max amount: {{ loanType.maxAmount }} | interest rate: {{ loanType.interestRate }} %</option>
                                         </select>
                                     </div>
                                     <div class="col">

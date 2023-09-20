@@ -73,20 +73,21 @@ Vue.createApp({
                     this.interestRate = selectedLoanType.interestRate;
                     this.paymentsList = selectedLoanType.payments;
                 }
+            console.log(this.interestRate)
         },
         finish: function () {
             window.location.reload();
         },
         checkFees: function () {
             this.fees = [];
-            this.interestRate = this.loanTypes.interestRate;
+            //this.interestRate = this.loanTypes.interestRate;
             this.totalLoan = parseInt(this.amount) + (this.amount * (this.interestRate / 100));
 
             console.log(this.amount);
             console.log(this.interestRate);
-            let amount = this.totalLoan / this.payments;
+            let amount = (this.totalLoan / this.payments).toFixed(2);
             for (let i = 1; i <= this.payments; i++) {
-                this.fees.push({ amount: amount });
+                this.fees.push({ amount: parseFloat(amount) });
             }
             this.feesmodal.show();
         },
