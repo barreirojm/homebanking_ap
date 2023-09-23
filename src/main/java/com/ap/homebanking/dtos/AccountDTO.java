@@ -1,6 +1,8 @@
 package com.ap.homebanking.dtos;
 
 import com.ap.homebanking.models.Account;
+import com.ap.homebanking.models.AccountType;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class AccountDTO {
     private LocalDate creationDate;
     private double balance;
     private boolean isActive;
+    private AccountType accountType;
     private Set<TransactionDTO> transactions = new HashSet<>();
 
     public AccountDTO(){
@@ -26,6 +29,7 @@ public class AccountDTO {
         this.balance = account.getBalance();
         this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
         this.isActive = account.isActive();
+        this.accountType = account.getAccountType();
     }
 
     public Long getId() {
@@ -46,6 +50,10 @@ public class AccountDTO {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 
     public Set<TransactionDTO> getTransactions() {

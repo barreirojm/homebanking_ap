@@ -33,7 +33,7 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.GET,
                         "/api/clients/current", "/api/accounts", "/api/accounts/{id}", "/api/clients/current/accounts",
                         "/api/transactions", "/api/clients/current/cards", "/api/loans", "/web/accounts.html", "/web/account.html",
-                        "/web/cards.html", "/web/create-cards.html", "/web/transfers.html", "/web/loan-application.html",
+                        "/web/cards.html", "/web/create-cards.html", "/web/transfers.html", "/web/loan-application.html", "/web/create-accounts.html",
                         "/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js",
                         "/web/js/transfers.js", "/web/js/loan-application.js"
                         ).hasAuthority("CLIENT")

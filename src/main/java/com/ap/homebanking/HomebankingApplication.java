@@ -38,10 +38,10 @@ public class HomebankingApplication {
 			clientRepository.save(client3);
 			clientRepository.save(admin);
 
-			Account account1 = new Account("VIN-001", LocalDate.now(), 5000, true);
-			Account account2 = new Account("VIN-002", LocalDate.now().plusDays(1), 7500, true);
-			Account account3 = new Account("VIN-003", LocalDate.of(2022, 1, 11), 250000, true);
-			Account account4 = new Account("VIN-004", LocalDate.of(2020, 7, 20), 25000000, true);
+			Account account1 = new Account("VIN-001", LocalDate.now(), 5000, true, AccountType.CHECKING);
+			Account account2 = new Account("VIN-002", LocalDate.now().plusDays(1), 7500, true, AccountType.SAVINGS);
+			Account account3 = new Account("VIN-003", LocalDate.of(2022, 1, 11), 250000, true, AccountType.SAVINGS);
+			Account account4 = new Account("VIN-004", LocalDate.of(2020, 7, 20), 25000000, true, AccountType.SAVINGS);
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);

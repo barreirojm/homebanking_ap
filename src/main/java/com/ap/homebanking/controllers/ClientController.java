@@ -2,6 +2,7 @@ package com.ap.homebanking.controllers;
 
 import com.ap.homebanking.dtos.ClientDTO;
 import com.ap.homebanking.models.Account;
+import com.ap.homebanking.models.AccountType;
 import com.ap.homebanking.models.Client;
 import com.ap.homebanking.models.RoleType;
 import com.ap.homebanking.repositories.AccountRepository;
@@ -90,7 +91,7 @@ public class ClientController {
                 number = "VIN-" + generateRandomAccountNumber();
             }
 
-            Account account = new Account(number, LocalDate.now(),0.0, true);
+            Account account = new Account(number, LocalDate.now(),0.0, true, AccountType.SAVINGS);
             account.setHolder(client);
 
             return account;

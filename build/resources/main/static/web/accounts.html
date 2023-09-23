@@ -97,7 +97,7 @@
                                             <label class="form-label"></label>
                                             <select v-model="selectedAccount" class="form-select" aria-label="Select an account" required>
 
-                                                <option v-for="account in onlyActiveAccounts"  :value="account">{{ account.number }}</option>
+                                                <option v-for="account in onlyActiveAccounts"  :value="account">{{ account.number }} | Type: {{ account.accountType }}</option>
                                             </select>
                                         </div>
                                         <div class="modal-footer">
@@ -133,7 +133,10 @@
                                 <div class="card border-0 account">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ account.number }}</h5>
+                                        <p class="card-text">Type: {{ account.accountType }}</p>
+                                        <hr>
                                         <p class="card-text"> {{ formatDate(account.creationDate) }}</p>
+                                        <hr>
                                         <p class="text-center lead account-balance"> ${{ account.balance }} </p>
                                     </div>
                                 </div>
