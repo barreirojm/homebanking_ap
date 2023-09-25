@@ -35,7 +35,7 @@ public class WebAuthorization {
                         "/api/transactions", "/api/clients/current/cards", "/api/loans", "/web/accounts.html", "/web/account.html",
                         "/web/cards.html", "/web/create-cards.html", "/web/transfers.html", "/web/loan-application.html", "/web/create-accounts.html",
                         "/web/css/cards.css", "/web/js/account.js","/web/js/accounts.js","/web/js/cards.js", "/web/js/create-cards.js",
-                        "/web/js/transfers.js", "/web/js/loan-application.js"
+                        "/web/js/transfers.js", "/web/js/loan-application.js", "/web/js/create-accounts.js"
                         ).hasAuthority("CLIENT")
 
                 .antMatchers(HttpMethod.PATCH, "/api/clients/current/cards", "/api/clients/current/accounts").hasAuthority("CLIENT")

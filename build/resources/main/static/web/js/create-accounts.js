@@ -40,11 +40,9 @@ Vue.createApp({
                                 this.errorToats.show();
                             })
                     }
-        }
-    },
+        },
 
     mounted: function () {
-            this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
-        }
-
+        this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
+    }
 }).mount('#app')

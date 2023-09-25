@@ -73,11 +73,11 @@ public class CardController {
         }
 
         // Verifica el límite de tarjetas inactivas (máximo 6)
+        int maxInactiveCards = 6;
+
         long inactiveCardCount = client.getCards().stream()
                 .filter(card -> !card.isActive())
                 .count();
-
-        int maxInactiveCards = 6;
 
         if (inactiveCardCount >= maxInactiveCards) {
             return new ResponseEntity<>("You have reached the maximum limit for inactive cards.", HttpStatus.FORBIDDEN);

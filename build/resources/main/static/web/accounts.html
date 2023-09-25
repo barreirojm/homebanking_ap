@@ -96,7 +96,7 @@
                                         <div class="modal-body">
                                             <label class="form-label"></label>
                                             <select v-model="selectedAccount" class="form-select" aria-label="Select an account" required>
-
+                                                <option value="0">Open this select menu</option>
                                                 <option v-for="account in onlyActiveAccounts"  :value="account">{{ account.number }} | Type: {{ account.accountType }}</option>
                                             </select>
                                         </div>
@@ -123,8 +123,8 @@
                     <div class="row mt-3">
                         <div class="col">
                             <h2 class="display-6 subtitle">Accounts</h2>
-                            <button v-if="clientInfo.accounts != null && clientInfo.accounts.length < 3"
-                                v-on:click="create" id="create" class="btn btn-sm btn-success">Create</button>
+                            <a v-if="clientInfo.accounts != null" href="create-accounts.html"
+                               id="create" class="btn btn-sm btn-success">Create</a>
                         </div>
                     </div>
                     <div class="row mx-2">

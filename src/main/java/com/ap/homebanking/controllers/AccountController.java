@@ -54,7 +54,7 @@ public class AccountController {
         return accountService.getAccount(auth);
     }
 
-    @PostMapping(path = "/clients/current/accounts")
+    /*@PostMapping(path = "/clients/current/accounts")
     public ResponseEntity<Object> createAccount (Authentication auth){
 
         Client client  = clientService.getClientByAuth(auth);
@@ -75,6 +75,69 @@ public class AccountController {
         }
 
         Account account = new Account(number, LocalDate.now(),0.0, true, AccountType.SAVINGS);
+
+        account.setHolder(client);
+        accountService.saveAccount(account);
+
+        client.getAccounts().add(account);
+
+        clientService.saveClient(client);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    private String generateRandomAccountNumber() {
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(900000) + 100000;
+        return String.valueOf(randomNumber);
+    }*/
+
+    ////////////////////////////////////////
+
+    @PostMapping(path = "/clients/current/accounts")
+    public ResponseEntity<Object> createAccount (@RequestParam AccountType type, Authentication auth){
+
+        Client client  = clientService.getClientByAuth(auth);
+
+        if (client == null || !client.getRole().equals(RoleType.CLIENT)) {
+            return new ResponseEntity<>("Only authenticated clients can create accounts.", HttpStatus.FORBIDDEN);
+        }
+
+        if (client.getAccounts().size() >= 3) {
+            return new ResponseEntity<>("You cannot create more than 3 accounts.", HttpStatus.FORBIDDEN);
+        }
+
+        if (client.getAccounts().stream()
+                .filter(account -> account.isActive())
+                .count() >= 3) {
+            return new ResponseEntity<>("You can only apply for 3 active accounts", HttpStatus.FORBIDDEN);
+        }
+
+        int maxTotalAccounts = 6;
+        long totalAccountCount = client.getAccounts().stream().count();
+
+        if (totalAccountCount >= maxTotalAccounts) {
+            return new ResponseEntity<>("You have reached the maximum limit for total accounts.", HttpStatus.FORBIDDEN);
+        }
+
+        int maxInactiveAccounts = 3;
+
+        long inactiveAccountCount = client.getAccounts().stream()
+                .filter(account -> !account.isActive())
+                .count();
+
+        if (inactiveAccountCount >= maxInactiveAccounts) {
+            return new ResponseEntity<>("You have reached the maximum limit for inactive accounts.", HttpStatus.FORBIDDEN);
+        }
+
+        String number = "VIN-" + generateRandomAccountNumber();
+
+        if (accountService.getAccountByNumber(number) != null) {
+
+            number = generateRandomAccountNumber();
+        }
+
+        Account account = new Account(number, LocalDate.now(),0.0, true, type);
 
         account.setHolder(client);
         accountService.saveAccount(account);

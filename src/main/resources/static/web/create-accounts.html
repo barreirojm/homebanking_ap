@@ -74,13 +74,13 @@
                         <h2 class="display-6 subtitle">Create accounts</h2>
                         <form class="mt-4" v-on:submit="create($event)">
                             <div class="row mb-3">
-                                <label for="card-type" class="col-sm-4 col-form-label ">Account type:</label>
+                                <label for="account-type" class="col-sm-4 col-form-label ">Account type:</label>
                                 <div class="col-sm-7">
-                                    <select id="card-type" v-model="cardType" class="form-select"
+                                    <select id="account-type" v-model="accountType" class="form-select"
                                             aria-label="Default select example" required>
                                         <option value="none">Open this select menu</option>
-                                        <option value="CREDIT">Credit</option>
-                                        <option value="DEBIT">Debit</option>
+                                        <option value="SAVINGS">Savings</option>
+                                        <option value="CHECKING">Checking</option>
                                     </select>
                                 </div>
                             </div>
